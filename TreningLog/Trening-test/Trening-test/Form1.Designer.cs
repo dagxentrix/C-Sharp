@@ -46,6 +46,10 @@
             this.txtPerson = new System.Windows.Forms.TextBox();
             this.lblPerson = new System.Windows.Forms.Label();
             this.comboboxNavn = new System.Windows.Forms.ComboBox();
+            this.btnHistorikk = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.listHistorikk = new System.Windows.Forms.ListBox();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listOvelser
@@ -182,7 +186,7 @@
             // 
             // txtPerson
             // 
-            this.txtPerson.Location = new System.Drawing.Point(563, 390);
+            this.txtPerson.Location = new System.Drawing.Point(563, 182);
             this.txtPerson.Name = "txtPerson";
             this.txtPerson.Size = new System.Drawing.Size(100, 20);
             this.txtPerson.TabIndex = 19;
@@ -210,13 +214,43 @@
             this.comboboxNavn.TabIndex = 22;
             this.comboboxNavn.SelectedIndexChanged += new System.EventHandler(this.comboboxNavn_SelectedIndexChanged);
             // 
+            // btnHistorikk
+            // 
+            this.btnHistorikk.Location = new System.Drawing.Point(179, 381);
+            this.btnHistorikk.Name = "btnHistorikk";
+            this.btnHistorikk.Size = new System.Drawing.Size(75, 23);
+            this.btnHistorikk.TabIndex = 23;
+            this.btnHistorikk.Text = "Vis full logg";
+            this.btnHistorikk.UseVisualStyleBackColor = true;
+            this.btnHistorikk.Click += new System.EventHandler(this.btnHistorikk_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.listHistorikk);
+            this.panel1.Location = new System.Drawing.Point(1, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(735, 334);
+            this.panel1.TabIndex = 24;
+            // 
+            // listHistorikk
+            // 
+            this.listHistorikk.FormattingEnabled = true;
+            this.listHistorikk.Location = new System.Drawing.Point(51, 38);
+            this.listHistorikk.Name = "listHistorikk";
+            this.listHistorikk.Size = new System.Drawing.Size(586, 238);
+            this.listHistorikk.TabIndex = 0;
+            this.listHistorikk.SelectedIndexChanged += new System.EventHandler(this.listHistorikk_SelectedIndexChanged);
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.BackgroundImage = global::Trening_test.Properties.Resources.bilde;
-            this.ClientSize = new System.Drawing.Size(759, 466);
+            this.ClientSize = new System.Drawing.Size(752, 419);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.btnHistorikk);
             this.Controls.Add(this.comboboxNavn);
             this.Controls.Add(this.lblPerson);
             this.Controls.Add(this.txtPerson);
@@ -237,6 +271,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formMain";
             this.Load += new System.EventHandler(this.formMain_Load);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -260,6 +295,9 @@
         private System.Windows.Forms.TextBox txtPerson;
         private System.Windows.Forms.Label lblPerson;
         private System.Windows.Forms.ComboBox comboboxNavn;
+        private System.Windows.Forms.Button btnHistorikk;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ListBox listHistorikk;
     }
 }
 

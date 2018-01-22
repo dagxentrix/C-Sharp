@@ -14,7 +14,6 @@ namespace Trening_test
 {
     public partial class formMain : Form
     {
-
         SqlConnection connection;
         string connectionString;
 
@@ -170,6 +169,7 @@ namespace Trening_test
             btnSlettData.Visible = false;
             lblPerson.Visible = false;
             txtPerson.Visible = false;
+            comboboxNavn.Visible = false;
         }
         //Viser labels, tekstbokser og knapper for å editere / legge til valg. 
         private void showOvelse()
@@ -190,6 +190,7 @@ namespace Trening_test
             lblRep.Visible = true;  
             btnSlettData.Visible = true;
             lblPerson.Visible = true;
+            comboboxNavn.Visible = true;
             //txtPerson.Visible = true;
         }
         private void btnShowHide_Click(object sender, EventArgs e)
@@ -234,7 +235,45 @@ namespace Trening_test
 
         private void formMain_Load(object sender, EventArgs e)
         {
-            
+            panel1.Visible=false;
+        }
+
+        private void populateHistorikk()
+        {
+            string query = "SELECT * FROM TreningData ORDER BY Person";
+            using (connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            {
+                DataTable historikkTable = new DataTable();
+                adapter.Fill(historikkTable);
+                historikkTable.Columns.Add("Multi", typeof(string), "Vekt + ' kilo, ' +Reps + ' reps, ' + ' Av:   ' +Person + '    Dato:   ' +Dato");
+                listHistorikk.DisplayMember = "Multi";
+                listHistorikk.ValueMember = "Id";
+                listHistorikk.DataSource = historikkTable;
+            }
+        }
+        private void btnHistorikk_Click(object sender, EventArgs e)
+        {
+            if (panel1.Visible == false)
+            {
+                panel1.Visible=true;
+                btnHistorikk.Text = "Skjul logg";
+            }
+            else
+            {
+                panel1.Visible = false;
+                btnHistorikk.Text = "Vis full logg";
+
+            }
+            populateHistorikk();
+
+
+        }
+
+        private void listHistorikk_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
