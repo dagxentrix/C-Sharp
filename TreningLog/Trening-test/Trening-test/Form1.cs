@@ -25,7 +25,6 @@ namespace Trening_test
             PopulateTreningData();
             hideData();
             hideOvelse();
-            
         }
         //Henter ut alle øvelsene
         private void PopulateOvelser()
@@ -47,14 +46,13 @@ namespace Trening_test
                 "INNER JOIN ØvelseTreningData b ON a.Id = b.TreningDataId " +
                 "WHERE b.ØvelseId = @ØvelseId " +
                 "ORDER BY Vekt DESC";
-
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             using (SqlDataAdapter adapter = new SqlDataAdapter(command))
             {
                 command.Parameters.AddWithValue("@ØvelseId", listOvelser.SelectedValue);
                 DataTable treningDataTable = new DataTable();
-                
+
                 adapter.Fill(treningDataTable);
 
                 treningDataTable.Columns.Add("Multi", typeof(string), "Vekt + ' kilo ' +Reps + ' reps' + ' ' +Person");
@@ -62,6 +60,7 @@ namespace Trening_test
                 listTreningData.ValueMember = "Id";
                 listTreningData.DataSource = treningDataTable;
             }
+
         }
         private void btnSlettOvelse_Click(object sender, EventArgs e)
         {
@@ -97,7 +96,7 @@ namespace Trening_test
         }
         private void listTreningData_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show(listTreningData.SelectedValue.ToString());
+            //MessageBox.Show(listTreningData.SelectedIndex.ToString());
         }
         private void btnNyOvelse_Click(object sender, EventArgs e)
         {
@@ -148,15 +147,24 @@ namespace Trening_test
                 command.Parameters.AddWithValue("@ØvelseId", listOvelser.SelectedValue);
                 command.Parameters.AddWithValue("@TreningDataId", treningID);
                 command.ExecuteScalar();
+                PopulateTreningData();
+
+                if (treningID == (int)listTreningData.SelectedValue)
+                {
+                    MessageBox.Show("Ny pers!!!!!!!!!");
+                }
+                else
+                {
+                    MessageBox.Show("OOOoooOOooKeeei");
+                }
             }
-            PopulateTreningData();
         }
         //Gjemmer labels, tekstbokser og knapper for å editere / legge til valg. 
         private void hideOvelse()
         {
             btnNyOvelse.Visible = false;
-            txtOvelseNavn.Visible = false;           
-            lblNavnOvelse.Visible = false;            
+            txtOvelseNavn.Visible = false;
+            lblNavnOvelse.Visible = false;
             btnSlettOvelse.Visible = false;
         }
         private void hideData()
@@ -187,7 +195,7 @@ namespace Trening_test
             //lblDato.Visible = true;
             btnLeggTilData.Visible = true;
             lblVekt.Visible = true;
-            lblRep.Visible = true;  
+            lblRep.Visible = true;
             btnSlettData.Visible = true;
             lblPerson.Visible = true;
             comboboxNavn.Visible = true;
@@ -206,7 +214,6 @@ namespace Trening_test
                 btnShowHide.Text = "Vis valg";
             }
         }
-
         private void btnShowHideData_Click(object sender, EventArgs e)
         {
             if (btnLeggTilData.Visible == false)
@@ -223,24 +230,24 @@ namespace Trening_test
         }
         private void comboboxNavn_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboboxNavn.SelectedIndex == 0)
+            if (comboboxNavn.SelectedIndex == 0)
             {
                 txtPerson.Text = "Frida";
             }
-            else if(comboboxNavn.SelectedIndex == 1)
+            else if (comboboxNavn.SelectedIndex == 1)
             {
                 txtPerson.Text = "Dag";
             }
         }
-
         private void formMain_Load(object sender, EventArgs e)
         {
-            panel1.Visible=false;
+            panel1.Visible = false;
+
         }
 
         private void populateHistorikk()
         {
-            string query = "SELECT * FROM TreningData ORDER BY Person";
+            string query = "SELECT * FROM TreningData ORDER BY Person, Vekt DESC";
             using (connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             using (SqlDataAdapter adapter = new SqlDataAdapter(command))
@@ -257,7 +264,8 @@ namespace Trening_test
         {
             if (panel1.Visible == false)
             {
-                panel1.Visible=true;
+                panel1.Visible = true;
+                panel1.BringToFront();
                 btnHistorikk.Text = "Skjul logg";
             }
             else
@@ -267,10 +275,7 @@ namespace Trening_test
 
             }
             populateHistorikk();
-
-
         }
-
         private void listHistorikk_SelectedIndexChanged(object sender, EventArgs e)
         {
 
